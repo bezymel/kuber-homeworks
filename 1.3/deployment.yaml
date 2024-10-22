@@ -1,23 +1,32 @@
-   apiVersion: apps/v1
-   kind: Deployment
-   metadata:
-     name: my-app
-   spec:
-     replicas: 1
-     selector:
-       matchLabels:
-         app: my-app
-     template:
-       metadata:
-         labels:
-           app: my-app
-       spec:
-         containers:
-         - name: nginx
-           image: nginx
-           ports:
-           - containerPort: 80
-         - name: multitool
-           image: wbitt/network-multitool
-           ports:
-           - containerPort: 8080
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-multitool-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-multitool
+  template:
+    metadata:
+      labels:
+        app: nginx-multitool
+    spec:
+      tolerations:
+      - key: "node.kubernetes.io/network-unavailable"
+        operator: "Exists"
+        effect: "NoSchedule"
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+      - name: multitool
+        image: praqma/network-multitool
+        ports:
+        - containerPort: 8080
+        env:
+        - name: HTTP_PORT
+          value: "8080"
+        - name: HTTPS_PORT
+          value: "8443"

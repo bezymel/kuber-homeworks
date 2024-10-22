@@ -1,11 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service
+  name: nginx-multitool-service
 spec:
   selector:
     app: nginx-multitool
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 80
+    - name: nginx
+      port: 80          # Порт, по которому сервис будет доступен
+      targetPort: 80    # Порт, на который сервис будет перенаправлять трафик (nginx)
+    - name: multitool
+      port: 8080        # Порт, по которому сервис будет доступен
+      targetPort: 8080  # Порт, на который сервис будет перенаправлять трафик (multitool)
+  type: ClusterIP       # Тип сервиса (можно использовать NodePort или LoadBalancer в зависимости от ваших требований)

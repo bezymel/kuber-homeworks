@@ -12,6 +12,10 @@ spec:
       labels:
         app: nginx-init
     spec:
+      tolerations:
+        - key: "node.kubernetes.io/network-unavailable"
+          operator: "Exists"
+          effect: "NoExecute"
       initContainers:
       - name: init-busybox
         image: busybox

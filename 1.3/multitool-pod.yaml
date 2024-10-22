@@ -5,8 +5,12 @@ metadata:
 spec:
   containers:
     - name: multitool
-      image: praqma/network-multitool  # Используем тот же образ, что и в deployment
+      image: praqma/network-multitool  # Используем тот же образ
       ports:
         - containerPort: 8080
       command: ["/bin/sh", "-c", "sleep infinity"]  # Позволяет контейнеру работать бесконечно
   restartPolicy: Always
+  tolerations:
+    - key: "node.kubernetes.io/network-unavailable"
+      operator: "Exists"
+      effect: "NoSchedule"

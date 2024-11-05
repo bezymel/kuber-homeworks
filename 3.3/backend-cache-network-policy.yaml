@@ -17,3 +17,7 @@ spec:
         - podSelector:
             matchLabels:
               app: cache
+    - to:
+        - podSelector:
+            matchLabels:
+              app: frontend  # Добавляем разрешение для фронтенда

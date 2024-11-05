@@ -6,5 +6,5 @@ metadata:
 spec:
   selector:
     app: backend
-   ports:
-     - port: 80
+  ports:
+    - port: 80
